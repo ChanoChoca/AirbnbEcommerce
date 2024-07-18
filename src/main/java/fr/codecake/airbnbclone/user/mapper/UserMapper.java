@@ -1,4 +1,4 @@
-package com.ecommerce.user.mapper;
+package fr.codecake.airbnbclone.user.mapper;
 
 import fr.codecake.airbnbclone.user.application.dto.ReadUserDTO;
 import fr.codecake.airbnbclone.user.domain.Authority;

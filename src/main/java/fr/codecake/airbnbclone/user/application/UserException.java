@@ -1,4 +1,4 @@
-package com.ecommerce.user.application;
+package fr.codecake.airbnbclone.user.application;
 
 public class UserException extends RuntimeException {
 

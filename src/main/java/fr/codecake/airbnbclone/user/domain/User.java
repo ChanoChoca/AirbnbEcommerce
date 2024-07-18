@@ -1,4 +1,4 @@
-package com.ecommerce.user.domain;
+package fr.codecake.airbnbclone.user.domain;
 
 import fr.codecake.airbnbclone.sharedkernel.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;

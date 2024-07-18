@@ -1,4 +1,4 @@
-package com.ecommerce.user.presentation;
+package fr.codecake.airbnbclone.user.presentation;
 
 import fr.codecake.airbnbclone.user.application.UserService;
 import fr.codecake.airbnbclone.user.application.dto.ReadUserDTO;

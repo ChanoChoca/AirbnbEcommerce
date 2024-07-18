@@ -1,4 +1,4 @@
-package com.ecommerce.user.repository;
+package fr.codecake.airbnbclone.user.repository;
 
 import fr.codecake.airbnbclone.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

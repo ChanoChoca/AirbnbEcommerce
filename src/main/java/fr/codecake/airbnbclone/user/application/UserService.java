@@ -1,4 +1,4 @@
-package com.ecommerce.user.application;
+package fr.codecake.airbnbclone.user.application;
 
 import fr.codecake.airbnbclone.infrastructure.config.SecurityUtils;
 import fr.codecake.airbnbclone.user.application.dto.ReadUserDTO;

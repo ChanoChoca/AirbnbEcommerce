@@ -1,4 +1,4 @@
-package com.ecommerce.user.domain;
+package fr.codecake.airbnbclone.user.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

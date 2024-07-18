@@ -1,4 +1,4 @@
-package com.ecommerce.user.application;
+package fr.codecake.airbnbclone.user.application;
 
 import com.auth0.client.auth.AuthAPI;
 import com.auth0.client.mgmt.ManagementAPI;
