@@ -1,10 +1,10 @@
-package com.ecommerce;
+package fr.codecake.airbnbclone;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AirbnbApplicationTests {
+class AirbnbCloneBackApplicationTests {
 
 	@Test
 	void contextLoads() {
