@@ -31,3 +31,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 Example
 `ng generate service core/auth/auth`
+
+`ng generate class core/model/user --type=model`
