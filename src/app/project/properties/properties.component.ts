@@ -24,7 +24,6 @@ export class PropertiesComponent implements OnInit, OnDestroy {
   loadingDeletion = false;
   loadingFetchAll = false;
 
-
   constructor() {
     this.listenFetchAll();
     this.listenDeleteByPublicId();
@@ -64,12 +63,12 @@ export class PropertiesComponent implements OnInit, OnDestroy {
     });
   }
 
-
   ngOnDestroy(): void {
+    // Clean up logic if needed
   }
 
   ngOnInit(): void {
-    this.fetchListings()
+    this.fetchListings();
   }
 
   onDeleteListing(listing: CardListing): void {
@@ -80,5 +79,9 @@ export class PropertiesComponent implements OnInit, OnDestroy {
   private fetchListings() {
     this.loadingFetchAll = true;
     this.landlordListingService.getAll();
+  }
+
+  trackByPublicId(index: number, listing: CardListing): string {
+    return listing.publicId;
   }
 }

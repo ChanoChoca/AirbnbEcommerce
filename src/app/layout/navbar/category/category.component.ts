@@ -17,11 +17,8 @@ import {filter, map} from "rxjs";
 export class CategoryComponent implements OnInit {
 
   categoryService = inject(CategoryService);
-
   categories: Category[] | undefined;
-
   currentActivateCategory = this.categoryService.getCategoryByDefault();
-
   isHome = false;
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
@@ -62,7 +59,7 @@ export class CategoryComponent implements OnInit {
             this.categoryService.changeCategory(category);
           }
         }
-      })
+      });
   }
 
   private activateCategory(category: Category) {
@@ -74,8 +71,12 @@ export class CategoryComponent implements OnInit {
   onChangeCategory(category: Category) {
     this.activateCategory(category);
     this.router.navigate([], {
-      queryParams: {"category": category.technicalName},
+      queryParams: { "category": category.technicalName },
       relativeTo: this.activatedRoute
-    })
+    });
+  }
+
+  trackByTechnicalName(index: number, category: Category): string {
+    return category.technicalName;
   }
 }

@@ -143,4 +143,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.emptySearch = false;
   }
+
+  // In your component's TypeScript file
+  trackByPublicId(index: number, listing: any): string {
+    return listing.publicId;
+  }
 }

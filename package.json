@@ -24,6 +24,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@okta/okta-angular": "^6.4.0",
+    "@okta/okta-auth-js": "^7.7.0",
     "dayjs": "^1.11.11",
     "leaflet": "^1.9.4",
     "leaflet-geosearch": "^4.0.0",
