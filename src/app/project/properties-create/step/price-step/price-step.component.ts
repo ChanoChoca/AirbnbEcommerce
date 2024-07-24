@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output, ViewChild} from '@angular/core';
 import {FormsModule, NgForm} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
@@ -13,27 +13,20 @@ import {PriceVO} from "../../../model/listing-vo.model";
 })
 export class PriceStepComponent {
 
-  price = input.required<PriceVO>();
+  @Input() price: PriceVO = { value: 0 }; // Define como @Input() con valor por defecto
 
-  @Output()
-  priceChange = new EventEmitter<PriceVO>();
+  @Output() priceChange = new EventEmitter<PriceVO>();
+  @Output() stepValidityChange = new EventEmitter<boolean>();
 
-  @Output()
-  stepValidityChange = new EventEmitter<boolean>();
-
-  @ViewChild("formPrice")
-  formPrice: NgForm | undefined;
+  @ViewChild('formPrice') formPrice: NgForm | undefined;
 
   onPriceChange(newPrice: number) {
-    this.priceChange.emit({value: newPrice});
+    this.price = { value: newPrice }; // Actualiza la propiedad directamente
+    this.priceChange.emit(this.price);
     this.stepValidityChange.emit(this.validateForm());
   }
 
-  private validateForm() {
-    if (this.formPrice) {
-      return this.formPrice?.valid!;
-    } else {
-      return false;
-    }
+  private validateForm(): boolean {
+    return this.formPrice?.valid ?? false;
   }
 }

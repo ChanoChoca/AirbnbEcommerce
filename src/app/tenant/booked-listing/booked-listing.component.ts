@@ -25,7 +25,7 @@ export class BookedListingComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.listenFetchBooking();
-    this.listenCancelBooking()
+    this.listenCancelBooking();
   }
 
   ngOnDestroy(): void {
@@ -52,7 +52,7 @@ export class BookedListingComponent implements OnInit, OnDestroy {
       if (bookedListingsState.status === "OK") {
         this.loading = false;
         this.bookedListings = bookedListingsState.value!;
-      } else if(bookedListingsState.status === "ERROR") {
+      } else if (bookedListingsState.status === "ERROR") {
         this.loading = false;
         this.toastService.send({
           severity: "error", summary: "Error when fetching the listing",
@@ -79,8 +79,13 @@ export class BookedListingComponent implements OnInit, OnDestroy {
         this.bookedListings[listingToDeleteIndex].loading = false;
         this.toastService.send({
           severity: "error", summary: "Error when cancel your booking",
-        })
+        });
       }
     });
+  }
+
+  // Agrega este método para trackBy en *ngFor
+  trackByBookingPublicId(index: number, booking: BookedListing): string {
+    return booking.bookingPublicId;
   }
 }

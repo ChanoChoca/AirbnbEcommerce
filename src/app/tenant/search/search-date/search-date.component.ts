@@ -1,4 +1,4 @@
-import {Component, effect, EventEmitter, input, Output} from '@angular/core';
+import {Component, effect, EventEmitter, Input, input, Output} from '@angular/core';
 import {BookedDatesDTOFromServer} from "../../model/booking.model";
 import {CalendarModule} from "primeng/calendar";
 import {FormsModule} from "@angular/forms";
@@ -15,7 +15,7 @@ import {FormsModule} from "@angular/forms";
 })
 export class SearchDateComponent {
 
-  dates = input.required<BookedDatesDTOFromServer>();
+  @Input() dates!: BookedDatesDTOFromServer; // Usa `@Input` en lugar de `input`
 
   searchDateRaw = new Array<Date>();
 

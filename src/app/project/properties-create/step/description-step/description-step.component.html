@@ -5,21 +5,39 @@
   <form #formDescription="ngForm" novalidate class="w-full">
     <input #titleInput="ngModel" name="title" placeholder="Title" required
            class="w-full p-inputtext-lg" type="text" pInputText
-           [ngModel]="description().title.value" (ngModelChange)="onTitleChange($event)"/>
-    @if (titleInput.dirty && titleInput.invalid) {
-    <small id="title-required" class="text-primary">Title is required</small>
-    } @else {
-    <div class="placeholder-validation"></div>
-    }
+           [(ngModel)]="description.title.value" (ngModelChange)="onTitleChange($event)"/>
+    <small *ngIf="titleInput.dirty && titleInput.invalid" id="title-required" class="text-primary">
+      Title is required
+    </small>
+    <div *ngIf="!(titleInput.dirty && titleInput.invalid)" class="placeholder-validation"></div>
 
     <textarea #descriptionInput="ngModel" name="description"
               class="w-full mt-2" required placeholder="Summary" rows="5" cols="30"
-              pInputTextarea [ngModel]="description().description.value"
+              pInputTextarea [(ngModel)]="description.description.value"
               (ngModelChange)="onDescriptionChange($event)"></textarea>
-    @if (descriptionInput.dirty && descriptionInput.invalid) {
-    <small id="description-required" class="text-primary">Description is required</small>
-    } @else {
-    <div class="placeholder-validation"></div>
-    }
+    <small *ngIf="descriptionInput.dirty && descriptionInput.invalid" id="description-required" class="text-primary">
+      Description is required
+    </small>
+    <div *ngIf="!(descriptionInput.dirty && descriptionInput.invalid)" class="placeholder-validation"></div>
   </form>
+  <!--  <form #formDescription="ngForm" novalidate class="w-full">-->
+<!--    <input #titleInput="ngModel" name="title" placeholder="Title" required-->
+<!--           class="w-full p-inputtext-lg" type="text" pInputText-->
+<!--           [ngModel]="description().title.value" (ngModelChange)="onTitleChange($event)"/>-->
+<!--    @if (titleInput.dirty && titleInput.invalid) {-->
+<!--    <small id="title-required" class="text-primary">Title is required</small>-->
+<!--    } @else {-->
+<!--    <div class="placeholder-validation"></div>-->
+<!--    }-->
+
+<!--    <textarea #descriptionInput="ngModel" name="description"-->
+<!--              class="w-full mt-2" required placeholder="Summary" rows="5" cols="30"-->
+<!--              pInputTextarea [ngModel]="description().description.value"-->
+<!--              (ngModelChange)="onDescriptionChange($event)"></textarea>-->
+<!--    @if (descriptionInput.dirty && descriptionInput.invalid) {-->
+<!--    <small id="description-required" class="text-primary">Description is required</small>-->
+<!--    } @else {-->
+<!--    <div class="placeholder-validation"></div>-->
+<!--    }-->
+<!--  </form>-->
 </div>

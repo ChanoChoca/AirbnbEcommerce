@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
@@ -11,22 +11,22 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
   styleUrl: './info-step-control.component.scss'
 })
 export class InfoStepControlComponent {
+  @Input() title: string = '';  // Proporciona un valor por defecto
+  @Input() value: number = 0;   // Proporciona un valor por defecto
+  @Input() minValue: number = 0; // Valor mínimo por defecto
+  @Input() separator: boolean = true; // Añadido: valor por defecto
 
-  title = input.required<string>();
-  value = input.required<number>();
-  minValue = input<number>(0);
-
-  @Output()
-  valueChange = new EventEmitter<number>();
-
-  separator = input<boolean>(true);
+  @Output() valueChange = new EventEmitter<number>();
 
   onIncrement() {
-    this.valueChange.emit(this.value() + 1);
+    if (this.value < Number.MAX_SAFE_INTEGER) {
+      this.valueChange.emit(this.value + 1);
+    }
   }
 
   onDecrement() {
-    this.valueChange.emit(this.value() - 1);
+    if (this.value > this.minValue) {
+      this.valueChange.emit(this.value - 1);
+    }
   }
-
 }

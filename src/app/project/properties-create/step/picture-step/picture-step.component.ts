@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
@@ -11,15 +11,13 @@ import {NewListingPicture} from "../../../model/picture.model";
   templateUrl: './picture-step.component.html',
   styleUrl: './picture-step.component.scss'
 })
+
 export class PictureStepComponent {
 
-  pictures = input.required<Array<NewListingPicture>>();
+  @Input() pictures: Array<NewListingPicture> = []; // Define como @Input() y proporciona un valor por defecto
 
-  @Output()
-  picturesChange = new EventEmitter<Array<NewListingPicture>>();
-
-  @Output()
-  stepValidityChange = new EventEmitter<boolean>();
+  @Output() picturesChange = new EventEmitter<Array<NewListingPicture>>();
+  @Output() stepValidityChange = new EventEmitter<boolean>();
 
   extractFileFromTarget(target: EventTarget | null) {
     const htmlInputTarget = target as HTMLInputElement;
@@ -31,24 +29,24 @@ export class PictureStepComponent {
 
   onUploadNewPicture(target: EventTarget | null) {
     const picturesFileList = this.extractFileFromTarget(target);
-    if(picturesFileList !== null) {
-      for(let i = 0 ; i < picturesFileList.length; i++) {
+    if (picturesFileList !== null) {
+      for (let i = 0; i < picturesFileList.length; i++) {
         const picture = picturesFileList.item(i);
         if (picture !== null) {
           const displayPicture: NewListingPicture = {
             file: picture,
             urlDisplay: URL.createObjectURL(picture)
-          }
-          this.pictures().push(displayPicture);
+          };
+          this.pictures.push(displayPicture);
         }
       }
-      this.picturesChange.emit(this.pictures());
+      this.picturesChange.emit(this.pictures);
       this.validatePictures();
     }
   }
 
   private validatePictures() {
-    if (this.pictures().length >= 5) {
+    if (this.pictures.length >= 5) {
       this.stepValidityChange.emit(true);
     } else {
       this.stepValidityChange.emit(false);
@@ -56,8 +54,15 @@ export class PictureStepComponent {
   }
 
   onTrashPicture(pictureToDelete: NewListingPicture) {
-    const indexToDelete = this.pictures().findIndex(picture => picture.file.name === pictureToDelete.file.name);
-    this.pictures().splice(indexToDelete, 1);
-    this.validatePictures();
+    const indexToDelete = this.pictures.findIndex(picture => picture.file.name === pictureToDelete.file.name);
+    if (indexToDelete !== -1) {
+      this.pictures.splice(indexToDelete, 1);
+      this.validatePictures();
+    }
+  }
+
+  trackByFileName(index: number, picture: { file: { name: string } }): string {
+    return picture.file.name;
   }
 }
+

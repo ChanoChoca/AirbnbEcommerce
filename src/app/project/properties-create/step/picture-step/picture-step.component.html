@@ -11,16 +11,27 @@
   </div>
 </div>
 
-@if (pictures()) {
-<div class="mt-2 flex flex-wrap w-full h-full">
-@for (picture of pictures(); track picture.file.name) {
-<div class="border-1 relative border-transparent border-round-3xl container-picture">
-  <button class="absolute trash-btn p-button" (click)="onTrashPicture(picture)">
-    <fa-icon icon="trash-can"></fa-icon>
-  </button>
-  <div class="border-1 border-transparent border-round-3xl bg-cover bg-no-repeat h-30rem w-full"
-       [style.background-image]="'url(' + picture.urlDisplay + ')'"></div>
+<div class="mt-2 flex flex-wrap w-full h-full" *ngIf="pictures">
+  <div *ngFor="let picture of pictures; trackBy: trackByFileName" class="border-1 relative border-transparent border-round-3xl container-picture">
+    <button class="absolute trash-btn p-button" (click)="onTrashPicture(picture)">
+      <fa-icon icon="trash-can"></fa-icon>
+    </button>
+    <div class="border-1 border-transparent border-round-3xl bg-cover bg-no-repeat h-30rem w-full"
+         [style.background-image]="'url(' + picture.urlDisplay + ')'"></div>
+  </div>
 </div>
-}
-</div>
-}
+
+
+<!--@if (pictures()) {-->
+<!--<div class="mt-2 flex flex-wrap w-full h-full">-->
+<!--@for (picture of pictures(); track picture.file.name) {-->
+<!--<div class="border-1 relative border-transparent border-round-3xl container-picture">-->
+<!--  <button class="absolute trash-btn p-button" (click)="onTrashPicture(picture)">-->
+<!--    <fa-icon icon="trash-can"></fa-icon>-->
+<!--  </button>-->
+<!--  <div class="border-1 border-transparent border-round-3xl bg-cover bg-no-repeat h-30rem w-full"-->
+<!--       [style.background-image]="'url(' + picture.urlDisplay + ')'"></div>-->
+<!--</div>-->
+<!--}-->
+<!--</div>-->
+<!--}-->

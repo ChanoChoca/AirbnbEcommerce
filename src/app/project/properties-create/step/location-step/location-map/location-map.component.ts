@@ -1,4 +1,4 @@
-import {Component, effect, EventEmitter, inject, input, Output} from '@angular/core';
+import {Component, effect, EventEmitter, inject, Input, input, Output} from '@angular/core';
 import {LeafletModule} from "@asymmetrik/ngx-leaflet";
 import {FormsModule} from "@angular/forms";
 import {AutoCompleteCompleteEvent, AutoCompleteModule, AutoCompleteSelectEvent} from "primeng/autocomplete";
@@ -21,6 +21,8 @@ import {filter} from "rxjs";
   styleUrl: './location-map.component.scss'
 })
 export class LocationMapComponent {
+  @Input() location: string = ''; // Define la propiedad location como @Input
+  @Output() locationChange = new EventEmitter<string>();
 
   countryService = inject(CountryService);
   toastService = inject(ToastService);
@@ -28,23 +30,17 @@ export class LocationMapComponent {
   private map: L.Map | undefined;
   private provider: OpenStreetMapProvider | undefined;
 
-  location = input.required<string>();
-  placeholder = input<string>("Select your home country");
+  placeholder = 'Select your home country';
 
   currentLocation: Country | undefined;
 
-  @Output()
-  locationChange = new EventEmitter<string>();
-
-  formatLabel = (country: Country) => country.flag + "   " + country.name.common;
-
   options = {
     layers: [
-      tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 18, attribution: "..."}),
+      tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "..." }),
     ],
     zoom: 5,
     center: latLng(46.87996, -121.726909)
-  }
+  };
 
   layersControl = {
     baseLayers: {
@@ -54,14 +50,13 @@ export class LocationMapComponent {
       }),
     },
     overlays: {
-      "Big Circle": circle([46.95, -122], {radius: 5000}),
-      "Big square": polygon([[46.8, -121.55], [46.8, -121.55], [46.8, -121.55], [46.8, -121.55]])
+      "Big Circle": circle([46.95, -122], { radius: 5000 }),
+      "Big Square": polygon([[46.8, -121.55], [46.8, -121.55], [46.8, -121.55], [46.8, -121.55]])
     }
-  }
+  };
 
   countries: Array<Country> = [];
   filteredCountries: Array<Country> = [];
-
 
   constructor() {
     this.listenToLocation();
@@ -87,7 +82,7 @@ export class LocationMapComponent {
       if (countriesState.status === "OK" && countriesState.value) {
         this.countries = countriesState.value;
         this.filteredCountries = countriesState.value;
-        this.changeMapLocation(this.location())
+        this.changeMapLocation(this.location);
       } else if (countriesState.status === "ERROR") {
         this.toastService.send({
           severity: "error", summary: "Error",
@@ -100,7 +95,7 @@ export class LocationMapComponent {
   private changeMapLocation(term: string) {
     this.currentLocation = this.countries.find(country => country.cca3 === term);
     if (this.currentLocation) {
-      this.provider!.search({query: this.currentLocation.name.common})
+      this.provider!.search({ query: this.currentLocation.name.common })
         .then((results) => {
           if (results && results.length > 0) {
             const firstResult = results[0];
@@ -110,13 +105,17 @@ export class LocationMapComponent {
               .bindPopup(firstResult.label)
               .openPopup();
           }
-        })
+        });
     }
   }
 
   search(newCompleteEvent: AutoCompleteCompleteEvent): void {
     this.filteredCountries =
-      this.countries.filter(country => country.name.common.toLowerCase().startsWith(newCompleteEvent.query))
+      this.countries.filter(country => country.name.common.toLowerCase().startsWith(newCompleteEvent.query));
+  }
+
+  formatLabel(country: Country): string {
+    return `${country.flag}   ${country.name.common}`;
   }
 
   protected readonly filter = filter;

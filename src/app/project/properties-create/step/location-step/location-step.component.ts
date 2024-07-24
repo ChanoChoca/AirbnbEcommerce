@@ -1,4 +1,4 @@
-import {Component, EventEmitter, input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, input, Output} from '@angular/core';
 import {LocationMapComponent} from "./location-map/location-map.component";
 
 @Component({
@@ -12,7 +12,7 @@ import {LocationMapComponent} from "./location-map/location-map.component";
 })
 export class LocationStepComponent {
 
-  location = input.required<string>();
+  @Input() location!: string;
 
   @Output()
   locationChange = new EventEmitter<string>();

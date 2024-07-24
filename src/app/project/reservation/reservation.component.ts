@@ -81,4 +81,8 @@ export class ReservationComponent implements OnInit, OnDestroy {
     reservation.loading = true;
     this.bookingService.cancel(reservation.bookingPublicId, reservation.listingPublicId, true);
   }
+
+  trackByBookingPublicId(index: number, reservation: BookedListing): string {
+    return reservation.bookingPublicId;
+  }
 }

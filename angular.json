@@ -32,7 +32,10 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/leaflet-geosearch/dist/geosearch.css"
+              "./node_modules/leaflet-geosearch/dist/geosearch.css",
+              "./node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           },
@@ -108,7 +111,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeicons/primeicons.css"
             ],
             "scripts": []
           }

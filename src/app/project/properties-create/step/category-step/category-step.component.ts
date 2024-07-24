@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, inject, Input, input, OnInit, Output} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Category, CategoryName} from "../../../../layout/navbar/category/category.model";
 import {CategoryService} from "../../../../layout/navbar/category/category.service";
@@ -14,7 +14,7 @@ import {CategoryService} from "../../../../layout/navbar/category/category.servi
 })
 export class CategoryStepComponent implements OnInit {
 
-  categoryName = input.required<CategoryName>();
+  @Input() categoryName!: CategoryName;
 
   @Output()
   categoryChange = new EventEmitter<CategoryName>();
@@ -32,5 +32,9 @@ export class CategoryStepComponent implements OnInit {
   onSelectCategory(newCategory: CategoryName): void {
     this.categoryChange.emit(newCategory);
     this.stepValidityChange.emit(true);
+  }
+
+  trackByTechnicalName(index: number, category: Category): string {
+    return category.technicalName;
   }
 }
