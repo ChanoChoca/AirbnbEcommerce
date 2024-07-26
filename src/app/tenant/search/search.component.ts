@@ -1,22 +1,22 @@
-import {Component, inject} from '@angular/core';
-import {Step} from "../../project/properties-create/step.model";
-import {Search} from "./search.model";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
-import {Router} from "@angular/router";
-import {BookedDatesDTOFromServer} from "../model/booking.model";
-import {NewListingInfo} from "../../project/model/listing.model";
+import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Importa CommonModule aquí
+import { Step } from "../../project/properties-create/step.model";
+import { Search } from "./search.model";
+import { DynamicDialogRef } from "primeng/dynamicdialog";
+import { Router } from "@angular/router";
+import { BookedDatesDTOFromServer } from "../model/booking.model";
+import { NewListingInfo } from "../../project/model/listing.model";
 import dayjs from "dayjs";
-import {
-  LocationMapComponent
-} from "../../project/properties-create/step/location-step/location-map/location-map.component";
-import {FooterStepComponent} from "../../shared/footer-step/footer-step.component";
-import {SearchDateComponent} from "./search-date/search-date.component";
-import {InfoStepComponent} from "../../project/properties-create/step/info-step/info-step.component";
+import { LocationMapComponent } from "../../project/properties-create/step/location-step/location-map/location-map.component";
+import { FooterStepComponent } from "../../shared/footer-step/footer-step.component";
+import { SearchDateComponent } from "./search-date/search-date.component";
+import { InfoStepComponent } from "../../project/properties-create/step/info-step/info-step.component";
 
 @Component({
   selector: 'app-search',
   standalone: true,
   imports: [
+    CommonModule, // Agrega CommonModule aquí
     LocationMapComponent,
     FooterStepComponent,
     SearchDateComponent,
