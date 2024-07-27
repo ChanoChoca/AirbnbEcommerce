@@ -3,7 +3,7 @@ import {TenantListingService} from "../tenant/tenant-listing.service";
 import {ToastService} from "../layout/toast.service";
 import {CategoryService} from "../layout/navbar/category/category.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CardListing} from "../project/model/listing.model";
+import {CardListing} from "../landlord/model/listing.model";
 import {Pagination} from "../core/model/request.model";
 import {filter, Subscription} from "rxjs";
 import {Category} from "../layout/navbar/category/category.model";
@@ -142,10 +142,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     this.loading = true;
     this.emptySearch = false;
-  }
-
-  // In your component's TypeScript file
-  trackByPublicId(index: number, listing: any): string {
-    return listing.publicId;
   }
 }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BookDateComponent } from './book-date.component';
+import {BookDateComponent} from './book-date.component';
 
 describe('BookDateComponent', () => {
   let component: BookDateComponent;

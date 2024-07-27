@@ -1,15 +1,15 @@
-import {Component, effect, inject, Input, OnDestroy, OnInit} from '@angular/core';
-import {BookedDatesDTOFromClient, CreateBooking} from "../model/booking.model";
-import dayjs from "dayjs";
-import {Router} from "@angular/router";
-import {AuthService} from "../../core/auth/auth.service";
-import {ToastService} from "../../layout/toast.service";
+import {Component, effect, inject, input, OnDestroy, OnInit} from '@angular/core';
+import {Listing} from "../../landlord/model/listing.model";
 import {BookingService} from "../service/booking.service";
-import {Listing} from "../../project/model/listing.model";
-import {MessageModule} from "primeng/message";
-import {FormsModule} from "@angular/forms";
+import {ToastService} from "../../layout/toast.service";
+import {AuthService} from "../../core/auth/auth.service";
+import {Router} from "@angular/router";
+import dayjs from "dayjs";
+import {BookedDatesDTOFromClient, CreateBooking} from "../model/booking.model";
+import {CurrencyPipe} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
-import {CurrencyPipe} from "@angular/common"; // Importa Input desde @angular/core
+import {FormsModule} from "@angular/forms";
+import {MessageModule} from "primeng/message";
 
 @Component({
   selector: 'app-book-date',
@@ -21,12 +21,12 @@ import {CurrencyPipe} from "@angular/common"; // Importa Input desde @angular/co
     MessageModule
   ],
   templateUrl: './book-date.component.html',
-  styleUrls: ['./book-date.component.scss'] // Cambia styleUrl a styleUrls
+  styleUrl: './book-date.component.scss'
 })
 export class BookDateComponent implements OnInit, OnDestroy {
 
-  @Input() listing!: Listing; // Utiliza @Input() para las propiedades
-  @Input() listingPublicId!: string;
+  listing = input.required<Listing>();
+  listingPublicId = input.required<string>();
 
   bookingService = inject(BookingService);
   toastService = inject(ToastService);
@@ -41,17 +41,16 @@ export class BookDateComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.listenToCheckAvailableDate();
-    this.listenToCreateBooking();
+    this.listenToCreateBooking()
   }
+
 
   ngOnDestroy(): void {
     this.bookingService.resetCreateBooking();
   }
 
   ngOnInit(): void {
-    if (this.listingPublicId) {
-      this.bookingService.checkAvailability(this.listingPublicId);
-    }
+    this.bookingService.checkAvailability(this.listingPublicId());
   }
 
   onDateChange(newBookingDates: Array<Date>) {
@@ -59,7 +58,7 @@ export class BookDateComponent implements OnInit, OnDestroy {
     if (this.validateMakeBooking()) {
       const startBookingDateDayJS = dayjs(newBookingDates[0]);
       const endBookingDateDayJS = dayjs(newBookingDates[1]);
-      this.totalPrice = endBookingDateDayJS.diff(startBookingDateDayJS, "days") * this.listing.price.value;
+      this.totalPrice = endBookingDateDayJS.diff(startBookingDateDayJS, "days") * this.listing().price.value;
     } else {
       this.totalPrice = 0;
     }
@@ -75,7 +74,7 @@ export class BookDateComponent implements OnInit, OnDestroy {
 
   onNewBooking() {
     const newBooking: CreateBooking = {
-      listingPublicId: this.listingPublicId,
+      listingPublicId: this.listingPublicId(),
       startDate: this.bookingDates[0],
       endDate: this.bookingDates[1],
     }

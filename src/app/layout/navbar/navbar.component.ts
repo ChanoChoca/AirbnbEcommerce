@@ -10,7 +10,7 @@ import {MenuItem} from "primeng/api";
 import {ToastService} from "../toast.service";
 import {AuthService} from "../../core/auth/auth.service";
 import {User} from "../../core/model/user.model";
-import {PropertiesCreateComponent} from "../../project/properties-create/properties-create.component";
+import {PropertiesCreateComponent} from "../../landlord/properties-create/properties-create.component";
 import {SearchComponent} from "../../tenant/search/search.component";
 import {ActivatedRoute} from "@angular/router";
 import dayjs from "dayjs";

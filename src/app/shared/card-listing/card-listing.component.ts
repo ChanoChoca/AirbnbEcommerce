@@ -1,9 +1,9 @@
-import {Component, effect, EventEmitter, inject, Input, input, Output} from '@angular/core';
-import {CardListing} from "../../project/model/listing.model";
+import {Component, effect, EventEmitter, inject, input, Output} from '@angular/core';
+import {CardListing} from "../../landlord/model/listing.model";
 import {BookedListing} from "../../tenant/model/booking.model";
 import {Router} from "@angular/router";
 import {CategoryService} from "../../layout/navbar/category/category.service";
-import {CountryService} from "../../project/properties-create/step/location-step/country.service";
+import {CountryService} from "../../landlord/properties-create/step/location-step/country.service";
 import {CurrencyPipe, DatePipe} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
@@ -20,11 +20,13 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 })
 export class CardListingComponent {
 
-  @Input() listing?: CardListing | BookedListing;
-  @Input() cardMode?: 'landlord' | 'booking';
+  listing = input.required<CardListing | BookedListing>();
+  cardMode = input<"landlord" | "booking">();
 
-  @Output() deleteListing = new EventEmitter<CardListing>();
-  @Output() cancelBooking = new EventEmitter<BookedListing>();
+  @Output()
+  deleteListing = new EventEmitter<CardListing>();
+  @Output()
+  cancelBooking = new EventEmitter<BookedListing>();
 
   bookingListing: BookedListing | undefined;
   cardListing: CardListing | undefined;
@@ -33,6 +35,7 @@ export class CardListingComponent {
   categoryService = inject(CategoryService);
   countryService = inject(CountryService);
 
+
   constructor() {
     this.listenToListing();
     this.listenToCardMode();
@@ -40,25 +43,25 @@ export class CardListingComponent {
 
   private listenToListing() {
     effect(() => {
-      const listing = this.listing;
-      this.countryService.getCountryByCode(listing!.location)
+      const listing = this.listing();
+      this.countryService.getCountryByCode(listing.location)
         .subscribe({
           next: country => {
             if (listing) {
-              this.listing!.location = country.region + ', ' + country.name.common;
+              this.listing().location = country.region + ", " + country.name.common
             }
           }
-        });
+        })
     });
   }
 
   private listenToCardMode() {
     effect(() => {
-      const cardMode = this.cardMode;
-      if (cardMode && cardMode === 'booking') {
-        this.bookingListing = this.listing as BookedListing;
+      const cardMode = this.cardMode();
+      if (cardMode && cardMode === "booking") {
+        this.bookingListing = this.listing() as BookedListing
       } else {
-        this.cardListing = this.listing as CardListing;
+        this.cardListing = this.listing() as CardListing;
       }
     });
   }
@@ -72,6 +75,8 @@ export class CardListingComponent {
   }
 
   onClickCard(publicId: string) {
-    this.router.navigate(['listing'], { queryParams: { id: publicId } });
+    this.router.navigate(['listing'],
+      {queryParams: {id: publicId}});
   }
+
 }

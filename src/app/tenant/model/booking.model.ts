@@ -1,5 +1,5 @@
-import {DisplayPicture} from "../../project/model/listing.model";
-import {PriceVO} from "../../project/model/listing-vo.model";
+import {DisplayPicture} from "../../landlord/model/listing.model";
+import {PriceVO} from "../../landlord/model/listing-vo.model";
 import {Dayjs} from "dayjs";
 
 export interface BookedDatesDTOFromServer {

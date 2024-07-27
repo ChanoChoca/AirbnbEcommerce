@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, input, Output} from '@angular/core';
+import {Component, EventEmitter, input, Output} from '@angular/core';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {Step} from "../../project/properties-create/step.model";
+import {Step} from "../../landlord/properties-create/step.model";
 
 @Component({
   selector: 'app-footer-step',
@@ -13,24 +13,28 @@ import {Step} from "../../project/properties-create/step.model";
 })
 export class FooterStepComponent {
 
-  @Input() currentStep!: Step; // Define como @Input() y usa el operador non-null assertion
-  @Input() loading: boolean = false; // Define como @Input() con valor por defecto
-  @Input() isAllStepsValid: boolean = false; // Define como @Input() con valor por defecto
-  @Input() labelFinishedBtn: string = 'Finish'; // Define como @Input() con valor por defecto
+  currentStep = input.required<Step>();
+  loading = input<boolean>(false);
+  isAllStepsValid = input<boolean>(false);
+  labelFinishedBtn = input<string>("Finish");
 
-  @Output() finish = new EventEmitter<void>(); // Cambia el tipo de emisión a void
-  @Output() previous = new EventEmitter<void>(); // Cambia el tipo de emisión a void
-  @Output() next = new EventEmitter<void>(); // Cambia el tipo de emisión a void
+  @Output()
+  finish = new EventEmitter<boolean>();
+  @Output()
+  previous = new EventEmitter<boolean>();
+  @Output()
+  next = new EventEmitter<boolean>();
 
   onFinish() {
-    this.finish.emit();
+    this.finish.emit(true);
   }
 
   onPrevious() {
-    this.previous.emit();
+    this.previous.emit(true);
   }
 
   onNext() {
-    this.next.emit();
+    this.next.emit(true);
   }
+
 }

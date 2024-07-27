@@ -1,10 +1,10 @@
 import {Routes} from '@angular/router';
-import {PropertiesComponent} from "./project/properties/properties.component";
+import {PropertiesComponent} from "./landlord/properties/properties.component";
 import {authorityRouteAccess} from "./core/auth/authority-route-access";
 import {HomeComponent} from "./home/home.component";
 import {DisplayListingComponent} from "./tenant/display-listing/display-listing.component";
 import {BookedListingComponent} from "./tenant/booked-listing/booked-listing.component";
-import {ReservationComponent} from "./project/reservation/reservation.component";
+import {ReservationComponent} from "./landlord/reservation/reservation.component";
 
 export const routes: Routes = [
   {

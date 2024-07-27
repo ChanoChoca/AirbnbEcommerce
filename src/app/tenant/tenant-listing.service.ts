@@ -1,6 +1,6 @@
 import {computed, inject, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {CardListing, Listing} from "../project/model/listing.model";
+import {CardListing, Listing} from "../landlord/model/listing.model";
 import {State} from "../core/model/state.model";
 import {createPaginationOption, Page, Pagination} from "../core/model/request.model";
 import {CategoryName} from "../layout/navbar/category/category.model";
@@ -16,7 +16,7 @@ export class TenantListingService {
   http = inject(HttpClient);
 
   private getAllByCategory$: WritableSignal<State<Page<CardListing>>>
-    = signal(State.Builder<Page<CardListing>>().forInit())
+  = signal(State.Builder<Page<CardListing>>().forInit())
   getAllByCategorySig = computed(() => this.getAllByCategory$());
 
   private getOneByPublicId$: WritableSignal<State<Listing>>
