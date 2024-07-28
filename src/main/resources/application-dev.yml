@@ -1,0 +1,10 @@
+#spring:
+#  liquibase:
+#    contexts: dev
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/airbnb
+    username: postgres
+    password: postgres
+  liquibase:
+    contexts: dev

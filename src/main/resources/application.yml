@@ -1,0 +1,61 @@
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: DEBUG
+    org.project.airbnb: DEBUG
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: airbnb
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: airbnb
+  liquibase:
+    contexts: dev
+    change-log: classpath:db/changelog/master.xml
+    default-schema: airbnb
+    enabled: true
+    #drop-first: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  docker:
+    compose:
+      enabled: false
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: https://chanochoca.us.auth0.com/
+#          jwk-set-uri: https://chanochoca.us.auth0.com/.well-known/jwks.json
+
+server:
+  port: 8080
+
+okta:
+  oauth2:
+    issuer: https://chanochoca.us.auth0.com/
+    client-id: WunUSie7An1v3qlKzWJC6UE7LhJeNYvK
+    client-secret: 73lJEbCEKhsr6PYS3r2J1WPyLLZWwFzDeXsKt5apIPz-YNMffjTTeU6sg95bhzEG
+
+application:
+  auth0:
+    role-landlord-id: rol_xTqlmlDzVg6ySJ6g

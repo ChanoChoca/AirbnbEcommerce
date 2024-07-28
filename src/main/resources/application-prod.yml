@@ -1,0 +1,18 @@
+logging:
+  level:
+    ROOT: info
+    org.hibernate.SQL: INFO
+    org.project.airbnb: INFO
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/airbnb
+    username: postgres
+    password: postgres
+  jpa:
+    properties:
+      hibernate:
+        default_schema: airbnb
+  liquibase:
+    contexts: prod
+    default-schema: airbnb
