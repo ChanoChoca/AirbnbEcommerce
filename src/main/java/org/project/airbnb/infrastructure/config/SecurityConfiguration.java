@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
@@ -41,35 +43,11 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        String issuerUri = "https://chanochoca.us.auth0.com/";
-//
-//        return NimbusJwtDecoder.withJwkSetUri(issuerUri).jwsAlgorithm(SignatureAlgorithm.RS512).build();
-//    }
-
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        String issuerUri = "https://chanochoca.us.auth0.com/";
-//
-//        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withIssuerLocation(issuerUri).build();
-//
-//        return token -> {
-//            Jwt jwt = jwtDecoder.decode(token);
-//
-//            // Adjust for clock skew
-//            Instant now = Instant.now();
-//            Instant issuedAt = jwt.getIssuedAt();
-//            Instant expiresAt = jwt.getExpiresAt();
-//            Duration clockSkew = Duration.ofMinutes(10); // Adjust this as needed
-//
-//            if (now.plus(clockSkew).isBefore(expiresAt) && now.minus(clockSkew).isAfter(issuedAt)) {
-//                return jwt;
-//            } else {
-//                throw new JwtException("Token is not valid or has expired");
-//            }
-//        };
-//    }
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        String issuerUri = "https://chanochoca.us.auth0.com/";
+        return NimbusJwtDecoder.withJwkSetUri(issuerUri).build();
+    }
 
     @Bean
     public GrantedAuthoritiesMapper userAuthoritiesMapper() {
