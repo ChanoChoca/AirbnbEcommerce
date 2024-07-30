@@ -1,14 +1,39 @@
 # Airbnb
 
-This is a full stack project with Angular and Spring Boot (Java)
+This is a full stack project with Angular and Spring Boot (with Java 22 and Maven)
 
 ## Screenshots
 
-[//]: # (![WoT App Screenshot]&#40;images/1.png&#41;)
+Image of the index page
+![Portada](images/1.png)
+Image of booking details
+![Portada](images/2.png)
+You can also delete your properties as a tenant
+![Portada](images/3.png)
+The login page
+![Portada](images/4.png)
 
-[//]: # (![WoT App Screenshot]&#40;images/2.png&#41;)
+## Auth0 Configuration: https://auth0.com/docs/quickstarts
 
-[//]: # (![WoT App Screenshot]&#40;images/3.png&#41;)
+The application must be created as a 'Regular Web Application', you also need to configure the following fields after creation:
+![Configuración](images/9.png)
+Configure user management
+![Configuración](images/6.png)
+The logic of logging, you need to create a role
+![Configuración](images/7.png)
+The logging logic, in addition to the code seen on screen, needs to create variables in 'Secrets' and variables in 'Dependencies'
+* Secrets
+  * DOMAIN
+  * CLIENT_ID
+  * CLIENT_SECRET
+*  Dependencies (under the Secrets icon)
+  * auth0 (with latest version)
+
+![Configuración](images/8.png)
+Style of logging
+![Configuración](images/5.png)
+And roles
+![Configuración](images/10.png)
 
 
 ## Tools Used
