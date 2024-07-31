@@ -1,10 +1,10 @@
-#spring:
-#  liquibase:
-#    contexts: dev
+# Configuración de la base de datos
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/airbnb
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/airbnb   # URL de conexión a la base de datos PostgreSQL en el puerto 5432
+    username: postgres                            # Nombre de usuario para conectar a la base de datos
+    password: postgres                            # Contraseña para conectar a la base de datos
+
+  # Configuración de Liquibase
   liquibase:
-    contexts: dev
+    contexts: dev                                # Define el contexto de Liquibase para aplicar cambios, en este caso, 'dev' para desarrollo

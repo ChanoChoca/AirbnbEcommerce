@@ -9,6 +9,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Entidad que representa un usuario en el sistema.
+ */
 @Entity
 @Table(name = "airbnb_user")
 public class User extends AbstractAuditingEntity<Long> {
@@ -98,19 +101,39 @@ public class User extends AbstractAuditingEntity<Long> {
         this.authorities = authorities;
     }
 
+    /**
+     * Compara esta instancia de usuario con otra para verificar si son iguales.
+     *
+     * @param o Objeto con el que comparar.
+     * @return Verdadero si son iguales, falso de lo contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(lastName, user.lastName) && Objects.equals(firstName, user.firstName) && Objects.equals(email, user.email) && Objects.equals(imageUrl, user.imageUrl) && Objects.equals(publicId, user.publicId);
+        return Objects.equals(lastName, user.lastName) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(imageUrl, user.imageUrl) &&
+                Objects.equals(publicId, user.publicId);
     }
 
+    /**
+     * Calcula el código hash para esta instancia de usuario.
+     *
+     * @return Código hash de la instancia de usuario.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(lastName, firstName, email, imageUrl, publicId);
     }
 
+    /**
+     * Representa esta instancia de usuario como una cadena.
+     *
+     * @return Cadena que representa la instancia de usuario.
+     */
     @Override
     public String toString() {
         return "User{" +
@@ -122,3 +145,4 @@ public class User extends AbstractAuditingEntity<Long> {
                 '}';
     }
 }
+

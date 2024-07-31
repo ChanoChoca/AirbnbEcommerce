@@ -1,110 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<!-- Especifica la versión del modelo de POM que se está utilizando -->
 	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Define el proyecto padre. Esto proporciona configuraciones y dependencias predeterminadas. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- Busca el padre en el repositorio -->
 	</parent>
+
+	<!-- Identifica el grupo, artefacto y versión del proyecto -->
 	<groupId>com.ecommerce</groupId>
 	<artifactId>airbnb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
+	<!-- Nombre del proyecto -->
 	<name>airbnb</name>
+
+	<!-- Descripción breve del proyecto -->
 	<description>Demo project for Spring Boot</description>
+
+	<!-- URL del proyecto, si está disponible -->
 	<url/>
+
+	<!-- Licencias del proyecto, si aplican -->
 	<licenses>
 		<license/>
 	</licenses>
+
+	<!-- Información sobre los desarrolladores del proyecto -->
 	<developers>
 		<developer/>
 	</developers>
+
+	<!-- Información sobre el control de versiones del proyecto -->
 	<scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
 		<url/>
 	</scm>
+
+	<!-- Propiedades del proyecto que se pueden reutilizar en otras partes del POM -->
 	<properties>
+		<!-- Versión de Java utilizada en el proyecto -->
 		<java.version>22</java.version>
+
+		<!-- Versión de MapStruct utilizada para el mapeo de objetos -->
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 	</properties>
+
+	<!-- Dependencias necesarias para el proyecto -->
 	<dependencies>
+		<!-- Dependencia para manejar OAuth2 JSON Web Tokens -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-jose</artifactId>
-			<version>6.3.1</version> <!-- Use the latest version -->
+			<version>6.3.1</version> <!-- Usa la última versión disponible -->
 		</dependency>
 
+		<!-- Starter para Spring Data JPA, simplifica la integración con JPA -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!-- Starter para el cliente OAuth2 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
+
+		<!-- Starter para la seguridad en Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
+		<!-- Starter para validaciones de datos en Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+
+		<!-- Starter para aplicaciones web en Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<!-- Starter para integración con Okta (servicio de autenticación) -->
 		<dependency>
 			<groupId>com.okta.spring</groupId>
 			<artifactId>okta-spring-boot-starter</artifactId>
 			<version>3.0.7</version>
 		</dependency>
+
+		<!-- Biblioteca para la gestión de cambios en la base de datos con Liquibase -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 		</dependency>
+
+		<!-- Librería para el mapeo de objetos con MapStruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+
+		<!-- Procesador de anotaciones para MapStruct -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-processor</artifactId>
 			<version>${mapstruct.version}</version>
 		</dependency>
+
+		<!-- Biblioteca para autenticación con Auth0 -->
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>auth0</artifactId>
 			<version>2.12.0</version>
 		</dependency>
 
-
+		<!-- Herramientas de desarrollo para reinicio automático y soporte para Docker Compose -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Herramientas para Docker Compose (solo en tiempo de ejecución) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-docker-compose</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Controlador JDBC para PostgreSQL -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Starter para pruebas con Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependencia para pruebas de seguridad con Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -112,19 +165,25 @@
 		</dependency>
 	</dependencies>
 
+	<!-- Configuración de plugins para la construcción del proyecto -->
 	<build>
 		<plugins>
+			<!-- Plugin de Maven para construir aplicaciones Spring Boot -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<!-- Plugin de Maven para la compilación de código Java -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.13.0</version>
 				<configuration>
+					<!-- Versión de Java para la compilación -->
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<!-- Configuración de los caminos para el procesador de anotaciones MapStruct -->
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>

@@ -6,9 +6,14 @@ import org.project.airbnb.listing.domain.BookingCategory;
 
 import java.util.UUID;
 
-public record DisplayCardListingDTO(PriceVO price,
-                                    String location,
-                                    PictureDTO cover,
-                                    BookingCategory bookingCategory,
-                                    UUID publicId) {
+/**
+ * DTO (Data Transfer Object) para representar la información de un listado en una tarjeta de presentación.
+ */
+public record DisplayCardListingDTO(
+        PriceVO price,                    // Precio del listado.
+        String location,                 // Ubicación del listado.
+        PictureDTO cover,                // Imagen de portada del listado.
+        BookingCategory bookingCategory, // Categoría de reserva del listado.
+        UUID publicId                    // Identificador público del listado.
+) {
 }

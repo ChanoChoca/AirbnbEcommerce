@@ -1,55 +1,55 @@
 logging:
   level:
-    ROOT: INFO
-    org.hibernate.SQL: DEBUG
-    org.project.airbnb: DEBUG
+    # Configura el nivel de log para diferentes paquetes
+    ROOT: INFO                 # Nivel de log general para la aplicación
+    org.hibernate.SQL: DEBUG   # Muestra las consultas SQL ejecutadas por Hibernate
+    org.project.airbnb: DEBUG  # Muestra logs detallados para el proyecto Airbnb
 
 spring:
   profiles:
-    active: dev
+    active: dev                # Define el perfil activo de Spring. Aquí, se usa el perfil 'dev' para desarrollo.
   application:
-    name: airbnb
+    name: airbnb               # Nombre de la aplicación
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    type: com.zaxxer.hikari.HikariDataSource   # Tipo de datasource utilizado
     hikari:
-      poolName: Hikari
-      auto-commit: false
+      poolName: Hikari         # Nombre del pool de conexiones Hikari
+      auto-commit: false      # Configura el auto-commit de transacciones
   data:
     jpa:
       repositories:
-        bootstrap-mode: deferred
+        bootstrap-mode: deferred  # Retrasa la inicialización de los repositorios JPA
   jpa:
-    open-in-view: false
+    open-in-view: false        # Desactiva el modo Open Session in View, evita que las sesiones de Hibernate persistan más allá de la petición HTTP
     hibernate:
-      ddl-auto: validate
+      ddl-auto: validate        # Validar el esquema de la base de datos sin realizar cambios
     properties:
       hibernate:
-        default_schema: airbnb
+        default_schema: airbnb  # Esquema predeterminado para Hibernate
   liquibase:
-    contexts: dev
-    change-log: classpath:db/changelog/master.xml
-    default-schema: airbnb
-    enabled: true
-    #drop-first: true
+    contexts: dev               # Contexto de Liquibase que se aplica para esta configuración
+    change-log: classpath:db/changelog/master.xml  # Archivo de changelog de Liquibase
+    default-schema: airbnb      # Esquema predeterminado para Liquibase
+    enabled: true               # Habilita Liquibase para aplicar cambios a la base de datos
+    #drop-first: true           # Opción comentada que, si se habilita, elimina las tablas antes de aplicar cambios
   servlet:
     multipart:
-      enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
-  # The following disables docker for testing
+      enabled: true            # Habilita la carga de archivos
+      max-file-size: 100MB     # Tamaño máximo permitido para un archivo cargado
+      max-request-size: 100MB  # Tamaño máximo permitido para la solicitud HTTP
   docker:
     compose:
-      enabled: false
+      enabled: false           # Desactiva Docker Compose para pruebas
 
 server:
-  port: 8080
+  port: 8080                   # Puerto en el que la aplicación escucha solicitudes
 
 okta:
   oauth2:
-    issuer: https://chanochoca.us.auth0.com/
-    client-id: ${AUTH0_CLIENT_ID}
-    client-secret: ${AUTH0_CLIENT_SECRET}
+    issuer: https://chanochoca.us.auth0.com/  # URI del emisor de OAuth2 para Okta
+    client-id: ${AUTH0_CLIENT_ID}  # ID del cliente de OAuth2
+    client-secret: ${AUTH0_CLIENT_SECRET}  # Secreto del cliente de OAuth2
 
 application:
   auth0:
-    role-landlord-id: rol_xTqlmlDzVg6ySJ6g
+    role-landlord-id: rol_xTqlmlDzVg6ySJ6g  # ID del rol de "landlord" en Auth0

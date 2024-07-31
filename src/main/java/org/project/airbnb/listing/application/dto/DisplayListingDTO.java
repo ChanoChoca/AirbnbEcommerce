@@ -9,16 +9,20 @@ import org.project.airbnb.listing.domain.BookingCategory;
 
 import java.util.List;
 
+/**
+ * DTO (Data Transfer Object) para representar la información detallada de un listado.
+ */
 public class DisplayListingDTO {
 
-    private DescriptionDTO description;
-    private List<PictureDTO> pictures;
-    private ListingInfoDTO infos;
-    private PriceVO price;
-    private BookingCategory category;
-    private String location;
-    private LandlordListingDTO landlord;
+    private DescriptionDTO description;  // Descripción del listado.
+    private List<PictureDTO> pictures;    // Lista de imágenes del listado.
+    private ListingInfoDTO infos;         // Información adicional sobre el listado.
+    private PriceVO price;                // Precio del listado.
+    private BookingCategory category;     // Categoría de reserva del listado.
+    private String location;              // Ubicación del listado.
+    private LandlordListingDTO landlord;  // Información sobre el arrendador.
 
+    // Getters y Setters
     public DescriptionDTO getDescription() {
         return description;
     }

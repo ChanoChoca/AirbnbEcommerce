@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * BookingService es el servicio principal para gestionar las reservas en la aplicación.
+ * Proporciona métodos para crear, cancelar y verificar la disponibilidad de las reservas.
+ */
 @Service
 public class BookingService {
 
@@ -30,6 +34,14 @@ public class BookingService {
     private final UserService userService;
     private final LandlordService landlordService;
 
+    /**
+     * Constructor del servicio BookingService.
+     *
+     * @param bookingRepository el repositorio de reservas
+     * @param bookingMapper el mapeador de reservas
+     * @param userService el servicio de usuarios
+     * @param landlordService el servicio de propietarios
+     */
     public BookingService(BookingRepository bookingRepository, BookingMapper bookingMapper,
                           UserService userService, LandlordService landlordService) {
         this.bookingRepository = bookingRepository;
@@ -38,6 +50,12 @@ public class BookingService {
         this.landlordService = landlordService;
     }
 
+    /**
+     * Crea una nueva reserva basada en los datos proporcionados.
+     *
+     * @param newBookingDTO los datos de la nueva reserva
+     * @return el estado de la operación
+     */
     @Transactional
     public State<Void, String> create(NewBookingDTO newBookingDTO) {
         Booking booking = bookingMapper.newBookingToBooking(newBookingDTO);
@@ -70,12 +88,23 @@ public class BookingService {
         return State.<Void, String>builder().forSuccess();
     }
 
+    /**
+     * Verifica la disponibilidad de un listado en función de su identificador público.
+     *
+     * @param publicId el identificador público del listado
+     * @return una lista de BookedDateDTO que representa las fechas reservadas
+     */
     @Transactional(readOnly = true)
     public List<BookedDateDTO> checkAvailability(UUID publicId) {
         return bookingRepository.findAllByFkListing(publicId)
                 .stream().map(bookingMapper::bookingToCheckAvailability).toList();
     }
 
+    /**
+     * Obtiene todas las reservas realizadas por el usuario autenticado.
+     *
+     * @return una lista de BookedListingDTO que representa las reservas del usuario
+     */
     @Transactional(readOnly = true)
     public List<BookedListingDTO> getBookedListing() {
         ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
@@ -85,6 +114,13 @@ public class BookingService {
         return mapBookingToBookedListing(allBookings, allListings);
     }
 
+    /**
+     * Mapea las reservas y los listados a BookedListingDTO.
+     *
+     * @param allBookings una lista de todas las reservas
+     * @param allListings una lista de todos los listados
+     * @return una lista de BookedListingDTO
+     */
     private List<BookedListingDTO> mapBookingToBookedListing(List<Booking> allBookings, List<DisplayCardListingDTO> allListings) {
         return allBookings.stream().map(booking -> {
             DisplayCardListingDTO displayCardListingDTO = allListings
@@ -100,6 +136,14 @@ public class BookingService {
         }).toList();
     }
 
+    /**
+     * Cancela una reserva.
+     *
+     * @param bookingPublicId el identificador público de la reserva
+     * @param listingPublicId el identificador público del listado
+     * @param byLandlord indica si la cancelación la realiza el propietario
+     * @return el estado de la operación
+     */
     @Transactional
     public State<UUID, String> cancel(UUID bookingPublicId, UUID listingPublicId, boolean byLandlord) {
         ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
@@ -119,6 +163,15 @@ public class BookingService {
         }
     }
 
+    /**
+     * Maneja la eliminación de una reserva por parte de un propietario.
+     *
+     * @param bookingPublicId el identificador público de la reserva
+     * @param listingPublicId el identificador público del listado
+     * @param connectedUser el usuario conectado
+     * @param deleteSuccess el estado de eliminación
+     * @return el estado de eliminación actualizado
+     */
     private int handleDeletionForLandlord(UUID bookingPublicId, UUID listingPublicId, ReadUserDTO connectedUser, int deleteSuccess) {
         Optional<DisplayCardListingDTO> listingVerificationOpt = landlordService.getByPublicIdAndLandlordPublicId(listingPublicId, connectedUser.publicId());
         if (listingVerificationOpt.isPresent()) {
@@ -127,6 +180,11 @@ public class BookingService {
         return deleteSuccess;
     }
 
+    /**
+     * Obtiene todas las reservas realizadas en las propiedades del propietario autenticado.
+     *
+     * @return una lista de BookedListingDTO que representa las reservas en las propiedades del propietario
+     */
     @Transactional(readOnly = true)
     public List<BookedListingDTO> getBookedListingForLandlord() {
         ReadUserDTO connectedUser = userService.getAuthenticatedUserFromSecurityContext();
@@ -136,6 +194,13 @@ public class BookingService {
         return mapBookingToBookedListing(allBookings, allProperties);
     }
 
+    /**
+     * Obtiene los identificadores de los listados que coinciden con las fechas reservadas.
+     *
+     * @param listingsId una lista de identificadores de listados
+     * @param bookedDateDTO las fechas reservadas
+     * @return una lista de identificadores de los listados que coinciden
+     */
     public List<UUID> getBookingMatchByListingIdsAndBookedDate(List<UUID> listingsId, BookedDateDTO bookedDateDTO) {
         return bookingRepository.findAllMatchWithDate(listingsId, bookedDateDTO.startDate(), bookedDateDTO.endDate())
                 .stream().map(Booking::getFkListing).toList();

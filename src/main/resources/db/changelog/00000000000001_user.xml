@@ -4,36 +4,49 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <!-- Cambio 1: Crear Secuencia -->
     <changeSet id="00000000000001-seq" author="Juan Ignacio Caprioli">
+        <!-- Crea una secuencia llamada 'user_generator' que comienza en 1 y se incrementa en 1 -->
         <createSequence sequenceName="user_generator" startValue="1" incrementBy="1"/>
     </changeSet>
 
+    <!-- Cambio 2: Crear Tabla de Usuarios -->
     <changeSet id="00000000000001-user" author="Juan Ignacio Caprioli">
         <createTable tableName="airbnb_user">
+            <!-- Columna para el identificador único del usuario -->
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <!-- Columna para un identificador público del usuario, de tipo UUID -->
             <column name="public_id" type="${uuidType}">
                 <constraints  nullable="false" unique="true" />
             </column>
+            <!-- Columna para el nombre del usuario -->
             <column name="first_name" type="varchar(50)"/>
+            <!-- Columna para el apellido del usuario -->
             <column name="last_name" type="varchar(50)"/>
+            <!-- Columna para el correo electrónico del usuario, con una restricción de unicidad -->
             <column name="email" type="varchar(255)">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_user_email"/>
             </column>
+            <!-- Columna para la URL de la imagen del usuario -->
             <column name="image_url" type="varchar(256)"/>
+            <!-- Columnas para almacenar las fechas de creación y última modificación -->
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
     </changeSet>
 
+    <!-- Cambio 3: Crear Tablas de Roles y Relación Usuario-Rol -->
     <changeSet id="00000000000001-authority" author="Juan Ignacio Caprioli">
+        <!-- Crea la tabla 'authority' para almacenar los roles -->
         <createTable tableName="authority">
             <column name="name" type="varchar(50)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
 
+        <!-- Crea la tabla 'user_authority' para asociar usuarios con roles -->
         <createTable tableName="user_authority">
             <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
@@ -43,19 +56,24 @@
             </column>
         </createTable>
 
+        <!-- Establece una clave primaria compuesta para la tabla 'user_authority' -->
         <addPrimaryKey columnNames="user_id, authority_name" tableName="user_authority"/>
 
+        <!-- Agrega una restricción de clave foránea en la columna 'authority_name' que referencia la tabla 'authority' -->
         <addForeignKeyConstraint baseColumnNames="authority_name"
                                  baseTableName="user_authority"
                                  constraintName="fk_authority_name"
                                  referencedColumnNames="name"
                                  referencedTableName="authority"/>
 
+        <!-- Agrega una restricción de clave foránea en la columna 'user_id' que referencia la tabla 'airbnb_user' -->
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="user_authority"
                                  constraintName="fk_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="airbnb_user"/>
+
+        <!-- Carga datos iniciales en la tabla 'authority' desde un archivo CSV -->
         <loadData
                 file="db/changelog/data/authority.csv"
                 separator=";"

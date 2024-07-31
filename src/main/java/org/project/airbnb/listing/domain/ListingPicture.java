@@ -7,6 +7,10 @@ import jakarta.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
 
+
+/**
+ * Entidad que representa una imagen asociada a un listado en la plataforma.
+ */
 @Entity
 @Table(name = "listing_picture")
 public class ListingPicture extends AbstractAuditingEntity<Long> {

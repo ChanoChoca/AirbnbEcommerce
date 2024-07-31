@@ -10,24 +10,33 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 
+/**
+ * DTO para guardar o actualizar la información de un listado.
+ */
 public class SaveListingDTO {
 
     @NotNull
-    BookingCategory category;
-
-    @NotNull String location;
-
-    @NotNull @Valid
-    ListingInfoDTO infos;
-
-    @NotNull @Valid
-    DescriptionDTO description;
-
-    @NotNull @Valid
-    PriceVO price;
+    private BookingCategory category; // Categoría de la reserva
 
     @NotNull
-    List<PictureDTO> pictures;
+    private String location; // Ubicación del listado
+
+    @NotNull
+    @Valid
+    private ListingInfoDTO infos; // Información del listado
+
+    @NotNull
+    @Valid
+    private DescriptionDTO description; // Descripción del listado
+
+    @NotNull
+    @Valid
+    private PriceVO price; // Precio del listado
+
+    @NotNull
+    private List<PictureDTO> pictures; // Lista de fotos del listado
+
+    // Getters y Setters
 
     public BookingCategory getCategory() {
         return category;

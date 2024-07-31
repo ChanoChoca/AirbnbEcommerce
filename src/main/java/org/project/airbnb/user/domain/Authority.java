@@ -20,14 +20,30 @@ public class Authority implements Serializable {
     @Column(length = 50)
     private String name;
 
+    /**
+     * Obtiene el nombre de la autoridad.
+     *
+     * @return Nombre de la autoridad.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Establece el nombre de la autoridad.
+     *
+     * @param name Nombre de la autoridad.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Compara esta autoridad con otro objeto para verificar si son iguales.
+     *
+     * @param o Objeto con el que comparar.
+     * @return Verdadero si son iguales, falso de lo contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,11 +52,21 @@ public class Authority implements Serializable {
         return Objects.equals(name, authority.name);
     }
 
+    /**
+     * Calcula el código hash de esta autoridad.
+     *
+     * @return Código hash de la autoridad.
+     */
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
     }
 
+    /**
+     * Representa esta autoridad como una cadena.
+     *
+     * @return Cadena que representa la autoridad.
+     */
     @Override
     public String toString() {
         return "Authority{" +

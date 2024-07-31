@@ -4,81 +4,108 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
+    <!-- Cambio 1: Crear Secuencia para Listings -->
     <changeSet id="00000000000002-seq" author="Juan Ignacio Caprioli">
+        <!-- Crea una secuencia llamada 'listing_generator' que comienza en 1 y se incrementa en 1 -->
         <createSequence sequenceName="listing_generator" startValue="1" incrementBy="1"/>
     </changeSet>
 
+    <!-- Cambio 2: Crear Tabla de Listings -->
     <changeSet id="00000000000002-listing" author="Juan Ignacio Caprioli">
         <createTable tableName="listing">
+            <!-- Columna para el identificador único del listing -->
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <!-- Columna para un identificador público del listing, de tipo UUID -->
             <column name="public_id" type="${uuidType}">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <!-- Columna para el título del listing -->
             <column name="title" type="varchar(256)">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para la descripción del listing -->
             <column name="description" type="varchar(256)">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el número de huéspedes -->
             <column name="guests" type="int">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el número de habitaciones -->
             <column name="bedrooms" type="int">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el número de camas -->
             <column name="beds" type="int">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el número de baños -->
             <column name="bathrooms" type="int">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el precio del listing -->
             <column name="price" type="int">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para la categoría del listing -->
             <column name="category" type="varchar(256)">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para la ubicación del listing -->
             <column name="location" type="varchar(256)">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para el identificador público del arrendador -->
             <column name="landlord_public_id" type="${uuidType}">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columnas para almacenar las fechas de creación y última modificación -->
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+        <!-- Agrega una restricción de clave foránea en la columna 'landlord_public_id' que referencia la tabla 'airbnb_user' -->
         <addForeignKeyConstraint baseColumnNames="landlord_public_id" baseTableName="listing"
                                  constraintName="fk_landlord_id" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="public_id"
                                  referencedTableName="airbnb_user" validate="true"/>
     </changeSet>
 
+    <!-- Cambio 3: Crear Secuencia para Listing Pictures -->
     <changeSet id="00000000000002-seq-picture" author="Juan Ignacio Caprioli">
+        <!-- Crea una secuencia llamada 'listing_picture_generator' que comienza en 1 y se incrementa en 1 -->
         <createSequence sequenceName="listing_picture_generator" startValue="1" incrementBy="1"/>
     </changeSet>
 
+    <!-- Cambio 4: Crear Tabla de Imágenes de Listings -->
     <changeSet id="00000000000002-picture" author="Juan Ignacio Caprioli">
         <createTable tableName="listing_picture">
+            <!-- Columna para el identificador único de la imagen del listing -->
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <!-- Columna para la referencia al listing al que pertenece la imagen -->
             <column name="listing_fk" type="bigint">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para almacenar el archivo de la imagen -->
             <column name="file" type="${blobType}">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para indicar si la imagen es la principal -->
             <column name="is_cover" type="boolean">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columna para almacenar el tipo de contenido del archivo de imagen -->
             <column name="file_content_type" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <!-- Columnas para almacenar las fechas de creación y última modificación -->
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+        <!-- Agrega una restricción de clave foránea en la columna 'listing_fk' que referencia la tabla 'listing' -->
         <addForeignKeyConstraint baseColumnNames="listing_fk" baseTableName="listing_picture"
                                  constraintName="fk_listing_id" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id" referencedTableName="listing"

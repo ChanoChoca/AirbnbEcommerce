@@ -8,6 +8,11 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Booking es una entidad que representa una reserva en la aplicación Airbnb.
+ * Hereda de AbstractAuditingEntity para incorporar propiedades de auditoría
+ * como la fecha de creación y la última modificación.
+ */
 @Entity
 @Table(name = "booking")
 public class Booking extends AbstractAuditingEntity<Long> {
@@ -110,7 +115,12 @@ public class Booking extends AbstractAuditingEntity<Long> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return totalPrice == booking.totalPrice && numberOfTravelers == booking.numberOfTravelers && Objects.equals(startDate, booking.startDate) && Objects.equals(endDate, booking.endDate) && Objects.equals(fkTenant, booking.fkTenant) && Objects.equals(fkListing, booking.fkListing);
+        return totalPrice == booking.totalPrice &&
+                numberOfTravelers == booking.numberOfTravelers &&
+                Objects.equals(startDate, booking.startDate) &&
+                Objects.equals(endDate, booking.endDate) &&
+                Objects.equals(fkTenant, booking.fkTenant) &&
+                Objects.equals(fkListing, booking.fkListing);
     }
 
     @Override

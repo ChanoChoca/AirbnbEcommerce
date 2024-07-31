@@ -1,7 +1,5 @@
 package org.project.airbnb.listing.domain;
 
-import org.project.airbnb.listing.domain.BookingCategory;
-import org.project.airbnb.listing.domain.ListingPicture;
 import org.project.airbnb.sharedkernel.domain.AbstractAuditingEntity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
@@ -11,6 +9,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Entidad que representa un listado de propiedades en la plataforma.
+ */
 @Entity
 @Table(name = "listing")
 public class Listing extends AbstractAuditingEntity<Long> {
@@ -33,10 +34,13 @@ public class Listing extends AbstractAuditingEntity<Long> {
 
     @Column(name = "guests")
     private int guests;
+
     @Column(name = "bedrooms")
     private int bedrooms;
+
     @Column(name = "beds")
     private int beds;
+
     @Column(name = "bathrooms")
     private int bathrooms;
 
@@ -45,7 +49,7 @@ public class Listing extends AbstractAuditingEntity<Long> {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private org.project.airbnb.listing.domain.BookingCategory bookingCategory;
+    private BookingCategory bookingCategory;
 
     @Column(name = "location")
     private String location;
@@ -54,7 +58,7 @@ public class Listing extends AbstractAuditingEntity<Long> {
     private UUID landlordPublicId;
 
     @OneToMany(mappedBy = "listing", cascade = CascadeType.REMOVE)
-    private Set<org.project.airbnb.listing.domain.ListingPicture> pictures = new HashSet<>();
+    private Set<ListingPicture> pictures = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -129,7 +133,7 @@ public class Listing extends AbstractAuditingEntity<Long> {
         this.price = price;
     }
 
-    public org.project.airbnb.listing.domain.BookingCategory getBookingCategory() {
+    public BookingCategory getBookingCategory() {
         return bookingCategory;
     }
 
@@ -153,7 +157,7 @@ public class Listing extends AbstractAuditingEntity<Long> {
         this.landlordPublicId = landlordPublicId;
     }
 
-    public Set<org.project.airbnb.listing.domain.ListingPicture> getPictures() {
+    public Set<ListingPicture> getPictures() {
         return pictures;
     }
 
@@ -166,7 +170,16 @@ public class Listing extends AbstractAuditingEntity<Long> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Listing listing = (Listing) o;
-        return guests == listing.guests && bedrooms == listing.bedrooms && beds == listing.beds && bathrooms == listing.bathrooms && price == listing.price && Objects.equals(title, listing.title) && Objects.equals(description, listing.description) && bookingCategory == listing.bookingCategory && Objects.equals(location, listing.location) && Objects.equals(landlordPublicId, listing.landlordPublicId);
+        return guests == listing.guests &&
+                bedrooms == listing.bedrooms &&
+                beds == listing.beds &&
+                bathrooms == listing.bathrooms &&
+                price == listing.price &&
+                Objects.equals(title, listing.title) &&
+                Objects.equals(description, listing.description) &&
+                bookingCategory == listing.bookingCategory &&
+                Objects.equals(location, listing.location) &&
+                Objects.equals(landlordPublicId, listing.landlordPublicId);
     }
 
     @Override

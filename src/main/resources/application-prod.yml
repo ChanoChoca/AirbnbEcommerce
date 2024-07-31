@@ -1,18 +1,22 @@
+# Configuración del nivel de logging
 logging:
   level:
-    ROOT: info
-    org.hibernate.SQL: INFO
-    org.project.airbnb: INFO
+    ROOT: info                  # Nivel de logging global, se establece en INFO para todas las clases
+    org.hibernate.SQL: INFO     # Nivel de logging específico para las consultas SQL generadas por Hibernate, se establece en INFO
+    org.project.airbnb: INFO    # Nivel de logging específico para el paquete 'org.project.airbnb', se establece en INFO
 
+# Configuración de Spring
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_URL}:5432/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${POSTGRES_URL}:5432/${POSTGRES_DB}   # URL de conexión a la base de datos, utilizando variables de entorno para el host y el nombre de la base de datos
+    username: ${POSTGRES_USER}                  # Nombre de usuario para conectar a la base de datos, utilizando una variable de entorno
+    password: ${POSTGRES_PASSWORD}             #  Contraseña para conectar a la base de datos, utilizando una variable de entorno
+
   jpa:
     properties:
       hibernate:
-        default_schema: airbnb
+        default_schema: airbnb                # Define el esquema por defecto para Hibernate
+
   liquibase:
-    contexts: prod
-    default-schema: airbnb
+    contexts: prod                         # Define el contexto de Liquibase, en este caso, 'prod' para producción
+    default-schema: Airbnb                 # Define el esquema por defecto para Liquibase

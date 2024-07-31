@@ -1,10 +1,10 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:latest'   # Usa la imagen más reciente de PostgreSQL disponible en Docker Hub
     volumes:
-      - ~/volumes/mivolumen/postgresql/:/var/lib/postgresql/data
+      - ~/volumes/mivolumen/postgresql/:/var/lib/postgresql/data  # Mapea un volumen local a la carpeta de datos de PostgreSQL dentro del contenedor
     environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres  # Establece la contraseña del usuario 'postgres'
+      - POSTGRES_USER=postgres      # Establece el nombre de usuario 'postgres'
     ports:
-      - 127.0.0.1:15432:5432
+      - 127.0.0.1:15432:5432        # Mapea el puerto 5432 del contenedor al puerto 15432 en la máquina host, accesible solo desde localhost
