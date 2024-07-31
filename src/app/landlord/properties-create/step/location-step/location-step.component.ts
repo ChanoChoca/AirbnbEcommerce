@@ -12,16 +12,16 @@ import {LocationMapComponent} from "./location-map/location-map.component";
 })
 export class LocationStepComponent {
 
-  location = input.required<string>();
+  location = input.required<string>();  // Propiedad de entrada obligatoria para la ubicación
 
   @Output()
-  locationChange = new EventEmitter<string>();
+  locationChange = new EventEmitter<string>();  // Evento emitido cuando la ubicación cambia
 
   @Output()
-  stepValidityChange = new EventEmitter<boolean>();
+  stepValidityChange = new EventEmitter<boolean>();  // Evento emitido cuando cambia la validez del paso
 
   onLocationChange(location: string) {
-    this.locationChange.emit(location);
-    this.stepValidityChange.emit(true);
+    this.locationChange.emit(location);  // Emite el nuevo valor de la ubicación
+    this.stepValidityChange.emit(true);  // Emite un valor indicando que el paso es válido
   }
 }

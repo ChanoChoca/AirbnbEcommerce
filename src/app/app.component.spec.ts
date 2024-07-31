@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'airbnb-clone-front' title`, () => {
+  it(`should have the 'airbnb-front' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('airbnb-clone-front');
+    expect(app.title).toEqual('airbnb-front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, airbnb-clone-front');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, airbnb-front');
   });
 });

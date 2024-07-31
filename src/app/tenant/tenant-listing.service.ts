@@ -15,21 +15,25 @@ export class TenantListingService {
 
   http = inject(HttpClient);
 
+  // Signal que mantiene el estado de la página de listados de tarjetas por categoría
   private getAllByCategory$: WritableSignal<State<Page<CardListing>>>
-  = signal(State.Builder<Page<CardListing>>().forInit())
+    = signal(State.Builder<Page<CardListing>>().forInit());
   getAllByCategorySig = computed(() => this.getAllByCategory$());
 
+  // Signal que mantiene el estado de un listado específico por ID público
   private getOneByPublicId$: WritableSignal<State<Listing>>
-    = signal(State.Builder<Listing>().forInit())
+    = signal(State.Builder<Listing>().forInit());
   getOneByPublicIdSig = computed(() => this.getOneByPublicId$());
 
+  // Subject para manejar la búsqueda de listados
   private search$: Subject<State<Page<CardListing>>> =
     new Subject<State<Page<CardListing>>>();
   search = this.search$.asObservable();
 
   constructor() { }
 
-  getAllByCategory(pageRequest: Pagination, category: CategoryName) : void {
+  // Método para obtener todos los listados de tarjetas por categoría
+  getAllByCategory(pageRequest: Pagination, category: CategoryName): void {
     let params = createPaginationOption(pageRequest);
     params = params.set("category", category);
     this.http.get<Page<CardListing>>(`${environment.API_URL}/tenant-listing/get-all-by-category`, {params})
@@ -37,13 +41,15 @@ export class TenantListingService {
         next: displayListingCards =>
           this.getAllByCategory$.set(State.Builder<Page<CardListing>>().forSuccess(displayListingCards)),
         error: error => this.getAllByCategory$.set(State.Builder<Page<CardListing>>().forError(error))
-      })
+      });
   }
 
+  // Método para resetear el estado de la obtención de listados por categoría
   resetGetAllCategory(): void {
-    this.getAllByCategory$.set(State.Builder<Page<CardListing>>().forInit())
+    this.getAllByCategory$.set(State.Builder<Page<CardListing>>().forInit());
   }
 
+  // Método para obtener un listado específico por su ID público
   getOneByPublicId(publicId: string): void {
     const params = new HttpParams().set("publicId", publicId);
     this.http.get<Listing>(`${environment.API_URL}/tenant-listing/get-one`, {params})
@@ -53,16 +59,18 @@ export class TenantListingService {
       });
   }
 
+  // Método para resetear el estado de la obtención de un listado por ID público
   resetGetOneByPublicId(): void {
-    this.getOneByPublicId$.set(State.Builder<Listing>().forInit())
+    this.getOneByPublicId$.set(State.Builder<Listing>().forInit());
   }
 
+  // Método para buscar listados según criterios y parámetros de paginación
   searchListing(newSearch: Search, pageRequest: Pagination): void {
     const params = createPaginationOption(pageRequest);
     this.http.post<Page<CardListing>>(`${environment.API_URL}/tenant-listing/search`, newSearch, {params})
       .subscribe({
         next: displayListingCards => this.search$.next(State.Builder<Page<CardListing>>().forSuccess(displayListingCards)),
         error: err => this.search$.next(State.Builder<Page<CardListing>>().forError(err))
-      })
+      });
   }
 }

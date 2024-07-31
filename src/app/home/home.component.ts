@@ -1,74 +1,74 @@
 import {Component, effect, inject, OnDestroy, OnInit} from '@angular/core';
-import {TenantListingService} from "../tenant/tenant-listing.service";
-import {ToastService} from "../layout/toast.service";
-import {CategoryService} from "../layout/navbar/category/category.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {CardListing} from "../landlord/model/listing.model";
-import {Pagination} from "../core/model/request.model";
-import {filter, Subscription} from "rxjs";
-import {Category} from "../layout/navbar/category/category.model";
-import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {CardListingComponent} from "../shared/card-listing/card-listing.component";
-import {Search} from "../tenant/search/search.model";
-import dayjs from "dayjs";
+import {TenantListingService} from "../tenant/tenant-listing.service"; // Servicio de listados de inquilinos
+import {ToastService} from "../layout/toast.service"; // Servicio de notificaciones
+import {CategoryService} from "../layout/navbar/category/category.service"; // Servicio de categorías
+import {ActivatedRoute, Router} from "@angular/router"; // Servicios de rutas y navegación
+import {CardListing} from "../landlord/model/listing.model"; // Modelo de listado de tarjetas
+import {Pagination} from "../core/model/request.model"; // Modelo de paginación
+import {filter, Subscription} from "rxjs"; // Operadores y clases de RxJS
+import {Category} from "../layout/navbar/category/category.model"; // Modelo de categoría
+import {FaIconComponent} from "@fortawesome/angular-fontawesome"; // Componente de ícono FontAwesome
+import {CardListingComponent} from "../shared/card-listing/card-listing.component"; // Componente de listado de tarjetas
+import {Search} from "../tenant/search/search.model"; // Modelo de búsqueda
+import dayjs from "dayjs"; // Biblioteca de manipulación de fechas
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-home', // Selector del componente
   standalone: true,
   imports: [
     FaIconComponent,
     CardListingComponent
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './home.component.html', // Ruta de la plantilla HTML
+  styleUrl: './home.component.scss' // Ruta del archivo de estilos
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  tenantListingService = inject(TenantListingService);
-  toastService = inject(ToastService);
-  categoryService = inject(CategoryService);
-  activatedRoute = inject(ActivatedRoute);
-  router = inject(Router);
+  tenantListingService = inject(TenantListingService); // Inyección del servicio de listados de inquilinos
+  toastService = inject(ToastService); // Inyección del servicio de notificaciones
+  categoryService = inject(CategoryService); // Inyección del servicio de categorías
+  activatedRoute = inject(ActivatedRoute); // Inyección del servicio de rutas activadas
+  router = inject(Router); // Inyección del servicio de navegación
 
-  listings: Array<CardListing> | undefined;
+  listings: Array<CardListing> | undefined; // Lista de listados de tarjetas
 
-  pageRequest: Pagination = {size: 20, page: 0, sort: []};
+  pageRequest: Pagination = {size: 20, page: 0, sort: []}; // Configuración de paginación
 
-  loading = false;
+  loading = false; // Indicador de carga
 
-  categoryServiceSubscription: Subscription | undefined;
-  searchIsLoading = false;
-  emptySearch = false;
-  private searchSubscription: Subscription | undefined;
+  categoryServiceSubscription: Subscription | undefined; // Suscripción al servicio de categorías
+  searchIsLoading = false; // Indicador de búsqueda en curso
+  emptySearch = false; // Indicador de búsqueda vacía
+  private searchSubscription: Subscription | undefined; // Suscripción a la búsqueda
 
   constructor() {
-    this.listenToGetAllCategory();
-    this.listenToSearch();
+    this.listenToGetAllCategory(); // Inicializar escucha de categorías
+    this.listenToSearch(); // Inicializar escucha de búsqueda
   }
 
   ngOnDestroy(): void {
-    this.tenantListingService.resetGetAllCategory();
+    this.tenantListingService.resetGetAllCategory(); // Reiniciar categorías
 
     if (this.categoryServiceSubscription) {
-      this.categoryServiceSubscription.unsubscribe();
+      this.categoryServiceSubscription.unsubscribe(); // Desuscribir del servicio de categorías
     }
 
     if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
+      this.searchSubscription.unsubscribe(); // Desuscribir de la búsqueda
     }
   }
 
   ngOnInit(): void {
-    this.startNewSearch();
-    this.listenToChangeCategory();
+    this.startNewSearch(); // Iniciar nueva búsqueda
+    this.listenToChangeCategory(); // Escuchar cambios de categoría
   }
 
   private listenToChangeCategory() {
     this.categoryServiceSubscription = this.categoryService.changeCategoryObs.subscribe({
       next: (category: Category) => {
-        this.loading = true;
+        this.loading = true; // Mostrar indicador de carga
         if (!this.searchIsLoading) {
-          this.tenantListingService.getAllByCategory(this.pageRequest, category.technicalName);
+          this.tenantListingService.getAllByCategory(this.pageRequest, category.technicalName); // Obtener listados por categoría
         }
       }
     })
@@ -78,15 +78,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     effect(() => {
       const categoryListingsState = this.tenantListingService.getAllByCategorySig();
       if (categoryListingsState.status === "OK") {
-        this.listings = categoryListingsState.value?.content;
-        this.loading = false;
-        this.emptySearch = false;
+        this.listings = categoryListingsState.value?.content; // Actualizar listados
+        this.loading = false; // Ocultar indicador de carga
+        this.emptySearch = false; // Ocultar indicador de búsqueda vacía
       } else if (categoryListingsState.status === "ERROR") {
         this.toastService.send({
           severity: "error", detail: "Error when fetching the listing", summary: "Error",
-        });
-        this.loading = false;
-        this.emptySearch = false;
+        }); // Mostrar notificación de error
+        this.loading = false; // Ocultar indicador de carga
+        this.emptySearch = false; // Ocultar indicador de búsqueda vacía
       }
     });
   }
@@ -95,16 +95,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.searchSubscription = this.tenantListingService.search.subscribe({
       next: searchState => {
         if (searchState.status === "OK") {
-          this.loading = false;
-          this.searchIsLoading = false;
-          this.listings = searchState.value?.content;
-          this.emptySearch = this.listings?.length === 0;
+          this.loading = false; // Ocultar indicador de carga
+          this.searchIsLoading = false; // Ocultar indicador de búsqueda en curso
+          this.listings = searchState.value?.content; // Actualizar listados
+          this.emptySearch = this.listings?.length === 0; // Actualizar indicador de búsqueda vacía
         } else if (searchState.status === "ERROR") {
-          this.loading = false;
-          this.searchIsLoading = false;
+          this.loading = false; // Ocultar indicador de carga
+          this.searchIsLoading = false; // Ocultar indicador de búsqueda en curso
           this.toastService.send({
             severity: "error", summary: "Error when search listing",
-          })
+          }); // Mostrar notificación de error
         }
       }
     })
@@ -115,23 +115,23 @@ export class HomeComponent implements OnInit, OnDestroy {
       filter(params => params['location']),
     ).subscribe({
       next: params => {
-        this.searchIsLoading = true;
-        this.loading = true;
+        this.searchIsLoading = true; // Mostrar indicador de búsqueda en curso
+        this.loading = true; // Mostrar indicador de carga
         const newSearch: Search = {
           dates: {
-            startDate: dayjs(params["startDate"]).toDate(),
-            endDate: dayjs(params["endDate"]).toDate(),
+            startDate: dayjs(params["startDate"]).toDate(), // Convertir fecha de inicio
+            endDate: dayjs(params["endDate"]).toDate(), // Convertir fecha de fin
           },
           infos: {
-            guests: {value: params['guests']},
-            bedrooms: {value: params['bedrooms']},
-            beds: {value: params['beds']},
-            baths: {value: params['baths']},
+            guests: {value: params['guests']}, // Información de invitados
+            bedrooms: {value: params['bedrooms']}, // Información de habitaciones
+            beds: {value: params['beds']}, // Información de camas
+            baths: {value: params['baths']}, // Información de baños
           },
-          location: params['location'],
+          location: params['location'], // Ubicación
         };
 
-        this.tenantListingService.searchListing(newSearch, this.pageRequest);
+        this.tenantListingService.searchListing(newSearch, this.pageRequest); // Realizar búsqueda
       }
     })
   }
@@ -139,8 +139,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   onResetSearchFilter() {
     this.router.navigate(["/"], {
       queryParams: {"category": this.categoryService.getCategoryByDefault().technicalName}
-    });
-    this.loading = true;
-    this.emptySearch = false;
+    }); // Reiniciar filtro de búsqueda
+    this.loading = true; // Mostrar indicador de carga
+    this.emptySearch = false; // Ocultar indicador de búsqueda vacía
   }
 }

@@ -18,34 +18,40 @@ import {filter} from "rxjs";
     AutoCompleteModule
   ],
   templateUrl: './location-map.component.html',
-  styleUrl: './location-map.component.scss'
+  styleUrls: ['./location-map.component.scss']  // Corrige el nombre de la propiedad de `styleUrl` a `styleUrls`
 })
 export class LocationMapComponent {
 
+  // Inyección de servicios
   countryService = inject(CountryService);
   toastService = inject(ToastService);
 
   private map: L.Map | undefined;
   private provider: OpenStreetMapProvider | undefined;
 
+  // Entrada de datos
   location = input.required<string>();
   placeholder = input<string>("Select your home country");
 
+  // Información de la ubicación actual
   currentLocation: Country | undefined;
 
   @Output()
   locationChange = new EventEmitter<string>();
 
+  // Formateo de la etiqueta para mostrar en el autocompletado
   formatLabel = (country: Country) => country.flag + "   " + country.name.common;
 
+  // Configuración inicial del mapa
   options = {
     layers: [
       tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 18, attribution: "..."}),
     ],
     zoom: 5,
-    center: latLng(46.87996, -121.726909)
+    center: latLng(-34.5883809, -61.0319544)
   }
 
+  // Controles de capas del mapa
   layersControl = {
     baseLayers: {
       "Open Street Map": tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -54,40 +60,49 @@ export class LocationMapComponent {
       }),
     },
     overlays: {
-      "Big Circle": circle([46.95, -122], {radius: 5000}),
-      "Big square": polygon([[46.8, -121.55], [46.8, -121.55], [46.8, -121.55], [46.8, -121.55]])
+      "Big Circle": circle([-34.5883809, -61.0319544], { radius: 5000 }),
+      "Big Square": polygon([
+        [-34.5883809 + 0.1, -61.0319544 - 0.1],
+        [-34.5883809 + 0.1, -61.0319544 + 0.1],
+        [-34.5883809 - 0.1, -61.0319544 + 0.1],
+        [-34.5883809 - 0.1, -61.0319544 - 0.1]
+      ])
     }
   }
 
+  // Datos de países
   countries: Array<Country> = [];
   filteredCountries: Array<Country> = [];
 
-
   constructor() {
-    this.listenToLocation();
+    this.listenToLocation(); // Inicializa la escucha de cambios en la ubicación
   }
 
+  // Callback para cuando el mapa esté listo
   onMapReady(map: L.Map) {
     this.map = map;
-    this.configSearchControl();
+    this.configSearchControl(); // Configura el control de búsqueda
   }
 
+  // Configuración del proveedor de búsqueda
   private configSearchControl() {
     this.provider = new OpenStreetMapProvider();
   }
 
+  // Maneja el cambio de ubicación en el autocompletado
   onLocationChange(newEvent: AutoCompleteSelectEvent) {
     const newCountry = newEvent.value as Country;
-    this.locationChange.emit(newCountry.cca3);
+    this.locationChange.emit(newCountry.cca3); // Emite el código del país
   }
 
+  // Escucha los cambios en la ubicación
   private listenToLocation() {
     effect(() => {
       const countriesState = this.countryService.countries();
       if (countriesState.status === "OK" && countriesState.value) {
         this.countries = countriesState.value;
         this.filteredCountries = countriesState.value;
-        this.changeMapLocation(this.location())
+        this.changeMapLocation(this.location()); // Actualiza la ubicación del mapa
       } else if (countriesState.status === "ERROR") {
         this.toastService.send({
           severity: "error", summary: "Error",
@@ -97,6 +112,7 @@ export class LocationMapComponent {
     });
   }
 
+  // Cambia la ubicación en el mapa
   private changeMapLocation(term: string) {
     this.currentLocation = this.countries.find(country => country.cca3 === term);
     if (this.currentLocation) {
@@ -114,10 +130,12 @@ export class LocationMapComponent {
     }
   }
 
+  // Filtra los países para el autocompletado
   search(newCompleteEvent: AutoCompleteCompleteEvent): void {
     this.filteredCountries =
       this.countries.filter(country => country.name.common.toLowerCase().startsWith(newCompleteEvent.query))
   }
 
+  // Método protegido que solo filtra la información (se puede usar para pruebas u otros fines)
   protected readonly filter = filter;
 }

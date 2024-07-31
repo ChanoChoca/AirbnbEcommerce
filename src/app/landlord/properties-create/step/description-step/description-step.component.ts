@@ -13,34 +13,34 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 })
 export class DescriptionStepComponent {
 
-  description = input.required<Description>();
+  description = input.required<Description>();  // Propiedad de entrada para la descripción del listado
 
   @Output()
-  descriptionChange = new EventEmitter<Description>();
+  descriptionChange = new EventEmitter<Description>();  // Evento para emitir cambios en la descripción
 
   @Output()
-  stepValidityChange = new EventEmitter<boolean>();
+  stepValidityChange = new EventEmitter<boolean>();  // Evento para emitir la validez del paso actual
 
   @ViewChild("formDescription")
-  formDescription: NgForm | undefined;
+  formDescription: NgForm | undefined;  // Referencia al formulario de descripción
 
   onTitleChange(newTitle: string) {
-    this.description().title = {value: newTitle};
-    this.descriptionChange.emit(this.description());
-    this.stepValidityChange.emit(this.validateForm());
+    this.description().title = {value: newTitle};  // Actualiza el título en la descripción
+    this.descriptionChange.emit(this.description());  // Emite el nuevo valor de la descripción
+    this.stepValidityChange.emit(this.validateForm());  // Emite la validez del formulario
   }
 
   onDescriptionChange(newDescription: string) {
-    this.description().description = {value: newDescription};
-    this.descriptionChange.emit(this.description());
-    this.stepValidityChange.emit(this.validateForm());
+    this.description().description = {value: newDescription};  // Actualiza la descripción en el objeto de descripción
+    this.descriptionChange.emit(this.description());  // Emite el nuevo valor de la descripción
+    this.stepValidityChange.emit(this.validateForm());  // Emite la validez del formulario
   }
 
   private validateForm(): boolean {
     if (this.formDescription) {
-      return this.formDescription?.valid!;
+      return this.formDescription?.valid!;  // Retorna si el formulario es válido
     } else {
-      return false;
+      return false;  // Retorna falso si el formulario no está disponible
     }
   }
 }
