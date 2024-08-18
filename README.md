@@ -17,6 +17,8 @@ The login page
 
 The application must be created as a 'Regular Web Application', you also need to configure the following fields after creation:
 ![Configuración](images/9.png)
+Also in the same tab, in 'Allowed Origins (CORS)' fill in with `http://localhost:8080, http://localhost:4200`
+
 Configure user management
 ![Configuración](images/6.png)
 The logic of logging, you need to create a role
