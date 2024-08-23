@@ -10,8 +10,8 @@ describe('AvatarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AvatarComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AvatarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

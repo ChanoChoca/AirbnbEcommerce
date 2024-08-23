@@ -1,26 +1,65 @@
-@if (loading) {
-  <div class="flex justify-content-center align-items-center">
-    <fa-icon class="ml-2 text-primary" icon="circle-notch" animation="spin" size="3x"></fa-icon>
+<div class="info-section">
+  <div class="section gray-background">
+    <div class="text-container">
+      <h2 class="title">¿Quiénes Somos?</h2>
+      <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      <p class="cta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur earum expedita iure magnam nostrum, omnis tempore? Dignissimos dolorum natus possimus provident quod voluptate voluptatibus! Debitis expedita quibusdam quos unde.</p>
+    </div>
   </div>
-} @else {
-  <div class="listing-grid">
-    @for (listing of listings; track listing.publicId) {
-      <app-card-listing [listing]="listing"></app-card-listing>
-    }
+  <div class="section brown-background">
+    <div class="text-container">
+      <h3 class="subtitle">Nuestra Misión y Valores</h3>
+      <div class="content-wrapper">
+        <div class="text-content">
+          <p class="cta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur earum expedita iure magnam nostrum, omnis tempore? Dignissimos dolorum natus possimus provident quod voluptate voluptatibus! Debitis expedita quibusdam quos unde.</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      </div>
+    </div>
   </div>
-}
-
-@if (!loading && listings?.length === 0 && !emptySearch) {
-  <div class="flex flex-column align-items-center justify-content-center h-10rem">
-    <h1>No listing found for this category</h1>
-    <div class="text-xl">You can come back later</div>
+  <!-- Repite las siguientes secciones para cada bloque de contenido -->
+  <div class="section gray-background">
+    <div class="text-container">
+      <h3 class="subtitle">Diferenciación de la Competencia</h3>
+      <div class="content-wrapper">
+        <div class="text-content">
+          <p class="cta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur earum expedita iure magnam nostrum, omnis tempore? Dignissimos dolorum natus possimus provident quod voluptate voluptatibus! Debitis expedita quibusdam quos unde.</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      </div>
+    </div>
   </div>
-}
-
-@if (!loading && emptySearch) {
-  <div class="flex flex-column align-items-center justify-content-center h-10rem">
-    <h1>No match for your search !</h1>
-    <div class="text-xl">Try with different parameters</div>
-    <button class="p-button mt-3" (click)="onResetSearchFilter()">Reset all the filters</button>
+  <div class="section brown-background">
+    <div class="text-container">
+      <h3 class="subtitle">Beneficios para los Miembros</h3>
+      <div class="content-wrapper">
+        <div class="text-content">
+          <p class="cta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur earum expedita iure magnam nostrum, omnis tempore? Dignissimos dolorum natus possimus provident quod voluptate voluptatibus! Debitis expedita quibusdam quos unde.</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      </div>
+    </div>
   </div>
-}
+  <div class="section gray-background">
+    <div class="text-container">
+      <h3 class="subtitle">Testimonios y Experiencias</h3>
+      <div class="content-wrapper">
+        <div class="text-content">
+          <p class="cta">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur earum expedita iure magnam nostrum, omnis tempore? Dignissimos dolorum natus possimus provident quod voluptate voluptatibus! Debitis expedita quibusdam quos unde.</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      </div>
+    </div>
+  </div>
+  <div class="section brown-background">
+    <div class="text-container">
+      <h3 class="subtitle">Llamado a la Acción</h3>
+      <div class="content-wrapper">
+        <div class="text-content">
+          <p class="cta">¿Quieres que los visitantes se unan? ¿Asistan a un evento?</p>
+        </div>
+        <img src="https://media.istockphoto.com/id/1307190527/es/foto/feliz-camarero-sirviendo-comida-a-un-grupo-de-amigos-en-un-pub.jpg?s=612x612&w=0&k=20&c=-BICd4vjkPYTHSW4zCdVd1vqbjG2Guz07i9Ctm9nzo4=" class="section-image">
+      </div>
+    </div>
+  </div>
+</div>

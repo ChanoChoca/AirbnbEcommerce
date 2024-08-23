@@ -10,7 +10,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     FontAwesomeModule // Importa el módulo de FontAwesome para usar íconos
   ],
   templateUrl: './avatar.component.html', // Ruta al archivo de plantilla HTML
-  styleUrls: ['./avatar.component.scss'] // Ruta al archivo de estilos SCSS
+  styleUrls: ['./avatar.component.css'] // Ruta al archivo de estilos SCSS
 })
 export class AvatarComponent {
 
