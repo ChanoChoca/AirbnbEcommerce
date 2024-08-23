@@ -1,27 +1,72 @@
-# RestauranteFrontend
+# Airbnb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
+This is a full stack project with Angular and Spring Boot (with Java 22 and Maven)
 
-## Development server
+## Screenshots
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Image of the index page
+![Portada](images/1.png)
+Image of booking details
+![Portada](images/2.png)
+You can also delete your properties as a tenant
+![Portada](images/3.png)
+The login page
+![Portada](images/4.png)
 
-## Code scaffolding
+## Auth0 Configuration: https://auth0.com/docs/quickstarts
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The application must be created as a 'Regular Web Application', you also need to configure the following fields after creation:
+![Configuración](images/9.png)
+Configure user management
+![Configuración](images/6.png)
+The logic of logging, you need to create a role
+![Configuración](images/7.png)
+The logging logic, in addition to the code seen on screen, needs to create variables in 'Secrets' and variables in 'Dependencies'
+* Secrets
+  * DOMAIN
+  * CLIENT_ID
+  * CLIENT_SECRET
+*  Dependencies (under the Secrets icon)
+  * auth0 (with latest version)
 
-## Build
+![Configuración](images/8.png)
+Style of logging
+![Configuración](images/5.png)
+And roles
+![Configuración](images/10.png)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Tools Used
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Day.js
+- Leaflet
+- PrimeNG
+- Font Awesome
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Install
 
-## Further help
+```bash
+  npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Run Application
+
+```bash
+  npm start
+```
+
+## Authors
+
+- [@Juan Ignacio Caprioli (ChanoChoca)](https://github.com/ChanoChoca)
+- [@Luis Francisco Martinez (Francisco9403)](https://github.com/Francisco9403)
+
+
+## Badges
+
+[//]: # (Add badges from somewhere like: [shields.io]&#40;https://shields.io/&#41;)
+
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
